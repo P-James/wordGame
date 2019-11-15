@@ -14,6 +14,9 @@
     <div class="synonyms">
     </div>
 
+    <button id="go">Go</button>
+    <button id="refresh">Refresh</button>
+    <button id="skip">Skip</button>
     <input type="text" name="guess" id="guess">
 
     <script src="apiRequest.js"></script>
