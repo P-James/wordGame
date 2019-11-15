@@ -72,17 +72,19 @@ function render() {
     synonymsOutput.textContent = wordsArray[0]["synonyms"][0];
   }
 }
-let defIndex = -1;
-let wordIndex = -1;
+let defIndex = 0;
+let wordIndex = 0;
 function refresh() {
-  definitionOutput.textContent =
-    wordsArray[wordIndex]["definitions"][defIndex + 1];
-  synonymsOutput.textContent = wordsArray[wordIndex]["synonyms"][defIndex + 1];
-  if (defIndex == wordsArray[0]["definitions"].length - 1) {
-    defIndex = -1;
-    refresh();
+  defIndex++;
+  if (defIndex == wordsArray[0]["definitions"].length) {
+    defIndex = 0;
+    definitionOutput.textContent =
+      wordsArray[wordIndex]["definitions"][defIndex];
+    synonymsOutput.textContent = wordsArray[wordIndex]["synonyms"][defIndex];
   } else {
-    defIndex++;
+    definitionOutput.textContent =
+      wordsArray[wordIndex]["definitions"][defIndex];
+    synonymsOutput.textContent = wordsArray[wordIndex]["synonyms"][defIndex];
   }
 }
 
