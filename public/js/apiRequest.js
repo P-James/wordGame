@@ -53,9 +53,13 @@ function getData() {
     });
 }
 // setTimeout necessary to allow http requests to complete before sending new request.
-for (let i = 0; i < 3; i++) {
-  setTimeout(getData());
+function loadThreeWords() {
+  for (let i = 0; i < 3; i++) {
+    setTimeout(getData());
+  }
 }
+loadThreeWords();
+
 console.log(wordsArray);
 
 //Render to DOM
@@ -100,6 +104,7 @@ function skip() {
     wordIndex = -1;
     skip();
   }
+  loadThreeWords();
 }
 
 const goBtn = document.querySelector("#go");
