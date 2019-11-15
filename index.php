@@ -1,8 +1,9 @@
-
-if (isset($_GET['action'])) {
-    if($_GET['action'] == "home"){
+<?php
+    if (isset($_GET['action'])) {
+        if($_GET['action'] == "home"){
+            loadTemplatePage();
+        }
+    } else {
         loadTemplatePage();
     }
-} else {
-    loadTemplatePage();
-}
+?>
