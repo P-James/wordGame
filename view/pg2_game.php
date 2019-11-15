@@ -2,7 +2,7 @@
 
 <div id="content"> 
     <div id="timer">
-        <p>30</p> <!-- this is where you insert the count down -->
+        <!-- <p>30</p> this is where you insert the count down -->
     </div>
     <div class="defDiv">
         <h1>Definition:</h1>  
@@ -16,6 +16,9 @@
         <input name="userAnswer" type="text" autocomplete="off">
     </div>
 </div>
+
+<script src="./public/js/clock.js"></script>
+
 <?php
 $content= ob_get_clean();
 require('template.php');

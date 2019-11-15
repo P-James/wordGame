@@ -1,4 +1,4 @@
 <?php
 function loadStartPage(){
-    require("./view/pg1_startGame.php");
+    require("./view/pg2_game.php");
 }
