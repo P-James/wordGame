@@ -26,10 +26,10 @@ function getData() {
     .then(responseJSON => {
       // console.log(responseJSON);
       if (
-        responseJSON["results"] === undefined ||
-        responseJSON["results"][0] === undefined ||
-        responseJSON["results"][0]["definition"] === undefined ||
-        responseJSON["results"][0]["synonyms"] === undefined
+        !responseJSON["results"] ||
+        !responseJSON["results"][0] ||
+        !responseJSON["results"][0]["definition"] ||
+        !responseJSON["results"][0]["synonyms"]
       ) {
         console.log("no definition or synonyms, getting another word");
         getData();
@@ -45,8 +45,6 @@ function getData() {
         responseJSON["results"].forEach((syn, i) => {
           responseObj["synonyms"][i] = syn["synonyms"];
         });
-        // responseJSON["results"][0]["synonyms"] = responseObj["synonyms"];
-        // responseObj["definition"] = responseJSON["results"][0]["definition"];
         wordsArray.push(responseObj);
       }
     })
@@ -60,10 +58,61 @@ for (let i = 0; i < 3; i++) {
 }
 console.log(wordsArray);
 
-// render to DOM
+//Render to DOM
+// Initial render to DOM - to be called once at start of game
+const definitionOutput = document.querySelector(".definition");
+const synonymsOutput = document.querySelector(".synonyms");
+
 function render() {
-  const wordOutput = document.querySelector(".word");
-  const definitionOutput = document.querySelector(".definition");
-  wordOutput.textContent = wordsArray[0]["word"];
-  definitionOutput.textContent = wordsArray[0]["definition"];
+  if (!wordsArray[0]) {
+    definitionOutput.textContent = "Still loading first word";
+    setTimeout(render, 500);
+  } else {
+    definitionOutput.textContent = wordsArray[0]["definitions"][0];
+    synonymsOutput.textContent = wordsArray[0]["synonyms"][0];
+  }
 }
+let defIndex = -1;
+let wordIndex = -1;
+function refresh() {
+  definitionOutput.textContent =
+    wordsArray[wordIndex]["definitions"][defIndex + 1];
+  synonymsOutput.textContent = wordsArray[wordIndex]["synonyms"][defIndex + 1];
+  if (defIndex == wordsArray[0]["definitions"].length - 1) {
+    defIndex = -1;
+    refresh();
+  } else {
+    defIndex++;
+  }
+}
+
+function skip() {
+  defIndex = 0; // refresh going back to first word definitions...
+  if (wordIndex < wordsArray.length - 1) {
+    definitionOutput.textContent =
+      wordsArray[wordIndex + 1]["definitions"][defIndex];
+    synonymsOutput.textContent =
+      wordsArray[wordIndex + 1]["synonyms"][defIndex];
+    wordIndex++;
+  } else {
+    wordIndex = -1;
+    skip();
+  }
+}
+
+const goBtn = document.querySelector("#go");
+goBtn.addEventListener("click", render);
+
+const refreshBtn = document.querySelector("#refresh");
+refreshBtn.addEventListener("click", refresh);
+
+const skipBtn = document.querySelector("#skip");
+skipBtn.addEventListener("click", skip);
+
+const body = document.querySelector("body");
+body.addEventListener("keyup", e => {
+  if (e.keyCode == 49) {
+    refresh();
+    e.preventDefault();
+  }
+});
