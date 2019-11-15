@@ -1,58 +1,118 @@
+// function getData will push an object to wordsArray.
+// object keys: word (string), definitions (array), synonyms (nested arrays)
+
 let wordsArray = [];
 
-function fetchWordFromAPI() {
-  var data = null;
-
-  var xhr = new XMLHttpRequest();
-  xhr.withCredentials = true;
-
-  xhr.addEventListener("readystatechange", function() {
-    if (this.readyState === this.DONE) {
-      let responseObj = {};
-      let responseJSON = JSON.parse(this.responseText);
-      if (
-        responseJSON["results"] === undefined ||
-        responseJSON["results"][0] === undefined ||
-        responseJSON["results"][0]["definition"] === undefined
-      ) {
-        console.log("trying again");
-        fetchWordFromAPI();
-      } else {
-        responseObj["word"] = responseJSON["word"];
-        responseObj["definition"] = responseJSON["results"][0]["definition"];
-        wordsArray.push(responseObj);
+// Get a random word that is:
+// between 3 and 10 letters long
+// Min Frequency 5 (max is 8 so fairly common words).
+// Match regex pattern that limits to letters only.
+// Must have definitions and some synonyms.
+function getData() {
+  let responseObj = {};
+  fetch(
+    "https://wordsapiv1.p.rapidapi.com/words/?letterPattern=%5E%5B%5E%5CW0-9%5Cs%5D%7B3%2C10%7D&frequencyMin=5&random=true",
+    {
+      method: "GET",
+      headers: {
+        "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
+        "x-rapidapi-key": "30f5aff5d9msha651378ce5a3dcap1cfe17jsn3eaca2fbd7b5"
       }
     }
-  });
-
-  xhr.open(
-    // Get a random word that is:
-    // between 3 and 10 letters long
-    // Min Frequency 5 (max is 8 so fairly common words).
-    // Match regex pattern that limits to letters only.
-    "GET",
-    "https://wordsapiv1.p.rapidapi.com/words/?letterPattern=%5E%5B%5E%5CW0-9%5Cs%5D%7B3%2C10%7D&frequencyMin=5&random=true"
-  );
-  xhr.setRequestHeader("x-rapidapi-host", "wordsapiv1.p.rapidapi.com");
-  xhr.setRequestHeader(
-    "x-rapidapi-key",
-    "30f5aff5d9msha651378ce5a3dcap1cfe17jsn3eaca2fbd7b5"
-  );
-
-  xhr.send(data);
+  )
+    .then(response => {
+      return response.json();
+    })
+    .then(responseJSON => {
+      // console.log(responseJSON);
+      if (
+        !responseJSON["results"] ||
+        !responseJSON["results"][0] ||
+        !responseJSON["results"][0]["definition"] ||
+        !responseJSON["results"][0]["synonyms"]
+      ) {
+        console.log("no definition or synonyms, getting another word");
+        getData();
+      } else {
+        responseObj["word"] = responseJSON["word"];
+        responseObj["definitions"] = [];
+        responseObj["synonyms"] = [];
+        // create an array of all the different definitions
+        responseJSON["results"].forEach((def, i) => {
+          responseObj["definitions"][i] = def["definition"];
+        });
+        // create an array of synonyms for each definition, store all in array
+        responseJSON["results"].forEach((syn, i) => {
+          responseObj["synonyms"][i] = syn["synonyms"];
+        });
+        wordsArray.push(responseObj);
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
 }
-
-for (let i = 0; i < 4; i++) {
-  fetchWordFromAPI();
+// setTimeout necessary to allow http requests to complete before sending new request.
+for (let i = 0; i < 3; i++) {
+  setTimeout(getData());
 }
-
-// render to DOM
-function render() {
-  const wordOutput = document.querySelector(".word");
-  const definitionOutput = document.querySelector(".definition");
-  wordOutput.textContent = wordsArray[0]["word"];
-  definitionOutput.textContent = wordsArray[0]["definition"];
-}
-setTimeout(render);
-
 console.log(wordsArray);
+
+//Render to DOM
+// Initial render to DOM - to be called once at start of game
+const definitionOutput = document.querySelector(".definition");
+const synonymsOutput = document.querySelector(".synonyms");
+
+function render() {
+  if (!wordsArray[0]) {
+    definitionOutput.textContent = "Still loading first word";
+    setTimeout(render, 500);
+  } else {
+    definitionOutput.textContent = wordsArray[0]["definitions"][0];
+    synonymsOutput.textContent = wordsArray[0]["synonyms"][0];
+  }
+}
+let defIndex = -1;
+let wordIndex = -1;
+function refresh() {
+  definitionOutput.textContent =
+    wordsArray[wordIndex]["definitions"][defIndex + 1];
+  synonymsOutput.textContent = wordsArray[wordIndex]["synonyms"][defIndex + 1];
+  if (defIndex == wordsArray[0]["definitions"].length - 1) {
+    defIndex = -1;
+    refresh();
+  } else {
+    defIndex++;
+  }
+}
+
+function skip() {
+  defIndex = 0; // refresh going back to first word definitions...
+  if (wordIndex < wordsArray.length - 1) {
+    definitionOutput.textContent =
+      wordsArray[wordIndex + 1]["definitions"][defIndex];
+    synonymsOutput.textContent =
+      wordsArray[wordIndex + 1]["synonyms"][defIndex];
+    wordIndex++;
+  } else {
+    wordIndex = -1;
+    skip();
+  }
+}
+
+const goBtn = document.querySelector("#go");
+goBtn.addEventListener("click", render);
+
+const refreshBtn = document.querySelector("#refresh");
+refreshBtn.addEventListener("click", refresh);
+
+const skipBtn = document.querySelector("#skip");
+skipBtn.addEventListener("click", skip);
+
+const body = document.querySelector("body");
+body.addEventListener("keyup", e => {
+  if (e.keyCode == 49) {
+    refresh();
+    e.preventDefault();
+  }
+});

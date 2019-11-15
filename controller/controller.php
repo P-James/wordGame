@@ -1,4 +1,4 @@
 <?php
-function loadTemplatePage(){
+function loadStartPage(){
     require("./view/pg1_startGame.php");
 }
