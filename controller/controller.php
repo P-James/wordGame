@@ -1,3 +1,4 @@
 <?php
-// storing database queries/ updates for pasting into model
-$var;
+function loadTemplatePage(){
+    require("./view/pg1_startGame.php");
+}

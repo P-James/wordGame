@@ -1,0 +1,269 @@
+body {
+    background-image: url("../images/wordgame_background.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: #999;
+
+    height: 98vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+img {
+    width: 450px;
+}
+
+#center {
+    width: 60%;
+    min-width: 800px;
+    height: 80%;
+    min-height: 650px;
+}
+
+fieldset {
+    height: 100%;
+    background-color: rgba(43, 22, 51, 0.6);
+    border: 5px solid #FF1FCD;
+    border-radius: 20px;
+}
+
+#content {
+    margin: auto;
+    padding: 0px 100px;
+    padding-top: 40px;
+    color: white;
+}
+
+/* _______________ CONTENT STYLING __________________ */
+
+#content {
+    font-family: 'Press Start 2P', sans-serif;
+    color: rgb(214, 220, 235);
+    position: relative;
+}
+
+button,
+input {
+    font-family: 'Press Start 2P', sans-serif;
+}
+
+#content p,
+#content h1 {
+    font-size: 1.5em;
+    line-height: 2em;
+}
+
+#content h1 {
+    font-size: 2em;
+    text-decoration: underline;
+}
+
+#timer {
+    position: absolute;
+    right: 100px;
+}
+
+#content div {
+    margin-bottom: 50px;
+}
+
+#content button {
+    font-size: 1.5em;
+    color: white;
+
+    margin: 0 auto;
+    display: block;
+    width: 80%;
+    height: 90px;
+
+    background-color: #161B2F;
+    border: 5px solid rgb(214, 220, 235);
+    border-radius: 15px;
+}
+
+#content input {
+    text-align: center;
+    font-size: 1.5em;
+    color: white;
+
+    margin: 0 auto;
+    display: block;
+    width: 80%;
+    height: 90px;
+
+    background-color: #161B2F;
+    border: 5px solid rgb(214, 220, 235);
+    border-radius: 15px;
+}
+
+
+/* ___________ highscore pg 1 styling ___________ */
+
+
+#highScorePg1 {
+    margin: auto;
+    padding: 0px 50px;
+    padding-top: 40px;
+    color: rgb(214, 220, 235);
+}
+
+#highScorePg1 {
+    font-family: 'Press Start 2P', sans-serif;
+}
+
+input {
+    font-family: 'Press Start 2P', sans-serif;
+}
+
+.score {
+    text-align: center;
+}
+
+#highScorePg1 p {
+    font-size: 1.2em;
+}
+
+#highScorePg1 h1 {
+    font-size: 5em;
+    line-height: 1em;
+}
+
+#highScorePg1 a {
+    color: rgb(214, 220, 235);
+    font-size: 1.2em;
+}
+
+#highScorePg1 div {
+    margin-bottom: 50px;
+}
+
+#highScorePg1 input {
+    text-align: center;
+    font-size: 1.5em;
+    color: white;
+
+    /* margin: 0 auto; */
+    display: block;
+    width: 70%;
+    height: 80px;
+
+    background-color: #161B2F;
+    border: 5px solid rgb(214, 220, 235);
+    border-radius: 15px;
+}
+
+.inputsBottom {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: center; */
+    align-content: center;
+    width: 100%;
+}
+
+.inputDiv {
+    line-height: 2.3em;
+    margin-right: 10%;
+    /* width: 600px; */
+}
+
+.toHighscorePg {
+    align-self: center;
+    line-height: 2.3em;
+}
+
+
+
+
+
+
+
+/* ___________ Score pg 2 styling ___________ */
+
+
+#scorePg2 {
+    margin: auto;
+    padding: 0px 50px;
+    padding-top: 40px;
+    color: rgb(214, 220, 235);
+    text-align: center;
+}
+
+#scorePg2 {
+    font-family: 'Press Start 2P', sans-serif;
+}
+
+input {
+    font-family: 'Press Start 2P', sans-serif;
+}
+
+.scorePg2 {
+    text-align: center;
+}
+
+#scorePg2 p {
+    font-size: 1.2em;
+}
+
+#scorePg2 h1 {
+    font-size: 5em;
+    line-height: 1em;
+}
+
+
+#scorePg2 a {
+    color: rgb(214, 220, 235);
+    font-size: 1.2em;
+    line-height: 4em;
+}
+
+
+
+
+
+/* ___________ HighScore page styling ___________ */
+
+#highScoreDiv {
+    margin: auto;
+    padding: 0px 50px;
+    padding-top: 10px;
+    color: rgb(214, 220, 235);
+    text-align: center;
+    font-family: 'Press Start 2P', sans-serif;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#title {
+    padding-top: 40px;
+    color: rgb(214, 220, 235);
+    font-family: 'Press Start 2P', sans-serif;
+    text-align: center;
+}
+
+#highScoreDiv h1 {
+    justify-self: end;
+}
+
+.names,
+.highscores {
+    font-size: 1.5em;
+}
+
+.names {
+    padding-right: 150px;
+}
+
+.playagainLinkHighScorePg a {
+    display: block;
+    color: rgb(214, 220, 235);
+    font-family: 'Press Start 2P', sans-serif;
+    text-align: center;
+    padding-top: 30px;
+    font-size: 1.5em;
+}
