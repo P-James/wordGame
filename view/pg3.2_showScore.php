@@ -6,10 +6,10 @@ ob_start(); ?>
         <div class="scorepg2">
             <p>your score was</p>
             <h1 id="userScore"><?= $userScore ?></h1> <!-- userscore is inserted here --> 
-            <a href="#">Play again?</a>
+            <a href="index.php?action=playGame">Play again?</a>
         </div>
         <div class="toHighscorePg2">
-            <a href="#" id="tohighscore">go to HIGH SCORES</a>
+            <a href="index.php?action=highScorePg" id="tohighscore">go to HIGH SCORES</a>
         </div>
         
     </div>
