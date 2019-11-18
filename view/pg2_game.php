@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<!-- <script src="./public/js/clock.js"></script> -->
+<script src="./public/js/clock.js"></script>
 <script src="./public/js/apiRequest.js"></script>
 
 <?php
