@@ -12,15 +12,14 @@ let score = 0;
 function getData() {
   let responseObj = {};
   fetch(
-    "https://wordsapiv1.p.rapidapi.com/words/?letterPattern=%5E%5B%5E%5CW0-9%5Cs%5D%7B3%2C10%7D&frequencyMin=5&random=true",
-    {
-      method: "GET",
-      headers: {
-        "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
-        "x-rapidapi-key": "30f5aff5d9msha651378ce5a3dcap1cfe17jsn3eaca2fbd7b5"
+      "https://wordsapiv1.p.rapidapi.com/words/?letterPattern=%5E%5B%5E%5CW0-9%5Cs%5D%7B3%2C10%7D&frequencyMin=5&random=true", {
+        method: "GET",
+        headers: {
+          "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
+          "x-rapidapi-key": "30f5aff5d9msha651378ce5a3dcap1cfe17jsn3eaca2fbd7b5"
+        }
       }
-    }
-  )
+    )
     .then(response => {
       return response.json();
     })
@@ -123,13 +122,18 @@ body.addEventListener("keyup", e => {
   }
 });
 const guessBar = document.querySelector("input[name='userAnswer']");
-guessBar.addEventListener("keyup", function(e) {
+guessBar.addEventListener("keyup", function (e) {
   if (e.keyCode == 13) {
     if (guessBar.value == wordsArray[wordIndex]["word"]) {
       score++;
       skip();
     } else {
-      console.log("incorrect");
+      // let wrong = false;
+      let input = document.getElementById('shake');
+      input.classList.add("wrong");
+      setTimeout(function () {
+        input.classList.remove("wrong");
+      }, 100)
     }
   }
 });

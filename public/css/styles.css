@@ -102,8 +102,7 @@ input {
     border-radius: 15px;
 }
 
-#content input:hover {
-    /* color: red; */
+.wrong {
     animation: shake 100ms linear;
 }
 
