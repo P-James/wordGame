@@ -3,6 +3,7 @@
 
 let wordsArray = [];
 let score = 0;
+let scoreDisplay = document.getElementById("showScore");
 
 // Get a random word that is:
 // between 3 and 10 letters long
@@ -129,6 +130,7 @@ guessBar.addEventListener("keyup", function (e) {
     if (guessBar.value == wordsArray[wordIndex]["word"]) {
       console.log("correct");
       score++;
+      scoreDisplay.textContent = score;
       skip();
     } else {
       console.log("incorrect");
@@ -144,6 +146,3 @@ guessBar.addEventListener("keyup", function (e) {
 });
 
 window.onload = render;
-
-let scoreDisplay = document.getElementById("showScore");
-scoreDisplay.textContent = score;
