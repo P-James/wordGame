@@ -11,11 +11,17 @@ guessBar.addEventListener("keyup", timerStart);
 function timerStart() {
   if (keyPressStarted === false) {
     setInterval(function() {
+      flashStyle();
       if (i >= 0) {
         timeDisplay.textContent = i;
         i--;
       }
     }, 1000);
     keyPressStarted = true;
+  }
+}
+function flashStyle() {
+  if (i <= 58) {
+    timeDisplay.classList.add("bigFlash");
   }
 }

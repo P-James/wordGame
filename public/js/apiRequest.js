@@ -67,6 +67,7 @@ console.log(wordsArray);
 // Initial render to DOM - to be called once at start of game
 const definitionOutput = document.querySelector(".definition");
 const synonymsOutput = document.querySelector(".synonyms");
+const synsQty = 3;
 
 function render() {
   if (!wordsArray[0]) {
@@ -74,7 +75,7 @@ function render() {
     setTimeout(render, 500);
   } else {
     definitionOutput.textContent = wordsArray[0]["definitions"][0];
-    synonymsOutput.textContent = wordsArray[0]["synonyms"][0];
+    synonymsOutput.textContent = wordsArray[0]["synonyms"][0].slice(0, synsQty);
   }
 }
 let defIndex = 0;
@@ -86,11 +87,15 @@ function refresh() {
     defIndex = 0;
     definitionOutput.textContent =
       wordsArray[wordIndex]["definitions"][defIndex];
-    synonymsOutput.textContent = wordsArray[wordIndex]["synonyms"][defIndex];
+    synonymsOutput.textContent = wordsArray[wordIndex]["synonyms"][
+      defIndex
+    ].slice(0, synsQty);
   } else {
     definitionOutput.textContent =
       wordsArray[wordIndex]["definitions"][defIndex];
-    synonymsOutput.textContent = wordsArray[wordIndex]["synonyms"][defIndex];
+    synonymsOutput.textContent = wordsArray[wordIndex]["synonyms"][
+      defIndex
+    ].slice(0, synsQty);
   }
 }
 
@@ -106,17 +111,9 @@ function skip() {
     wordIndex = -1;
     skip();
   }
+  guessBar.value = "";
   loadThreeWords();
 }
-
-const goBtn = document.querySelector("#go");
-goBtn.addEventListener("click", render);
-
-const refreshBtn = document.querySelector("#refresh");
-refreshBtn.addEventListener("click", refresh);
-
-const skipBtn = document.querySelector("#skip");
-skipBtn.addEventListener("click", skip);
 
 const body = document.querySelector("body");
 body.addEventListener("keyup", e => {
@@ -136,3 +133,4 @@ guessBar.addEventListener("keyup", function(e) {
     }
   }
 });
+window.onload = render;
