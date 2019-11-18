@@ -64,10 +64,17 @@ input {
     text-decoration: underline;
 }
 
-#timer {
+#side {
     position: absolute;
     right: 100px;
+    display: inline;
+    text-align: right;
 }
+
+#timer {
+    padding-top: 2em;
+}
+
 
 #content div {
     margin-bottom: 50px;

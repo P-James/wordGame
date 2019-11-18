@@ -1,9 +1,12 @@
 <?php ob_start(); ?>
 
 <div id="content"> 
-    <div id="timer">
-        <!-- <p>30</p> this is where you insert the count down -->
+    
+    <div id="side">
+        Score: <span id="showScore"> </span> 
+        <div id="timer"> </div>
     </div>
+    
     <div class="defDiv">
         <h1>Definition:</h1>  
         <p class="definition"></p> <!-- this is where youll insert the definition -->
