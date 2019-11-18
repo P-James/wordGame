@@ -71,14 +71,9 @@ function render() {
     synonymsOutput.textContent = wordsArray[0]["synonyms"][0];
   }
 }
-<<<<<<< HEAD
-let defIndex = -1;
-let wordIndex = -1;
-
-=======
 let defIndex = 0;
 let wordIndex = 0;
->>>>>>> 08b27c1a390523faabe196f6e6c01b1fb6419d09
+
 function refresh() {
   defIndex++;
   if (defIndex == wordsArray[0]["definitions"].length) {
