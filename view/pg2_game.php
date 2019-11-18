@@ -13,7 +13,7 @@
         <p class="synonyms"></p> <!-- this is where youll insert the synonymns -->
     </div>
         <div class="inputDiv">
-        <input name="userAnswer" type="text" autocomplete="off">
+        <input id="shake" name="userAnswer" type="text" autocomplete="off">
     </div>
 </div>
 

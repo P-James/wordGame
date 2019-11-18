@@ -102,21 +102,31 @@
     }
   }
 
-  function skip() {
-    defIndex = 0; // refresh going back to first word definitions...
-    if (wordIndex < wordsArray.length - 1) {
-      definitionOutput.textContent =
-        wordsArray[wordIndex + 1]["definitions"][defIndex];
-      synonymsOutput.textContent =
-        wordsArray[wordIndex + 1]["synonyms"][defIndex];
-      wordIndex++;
-    } else {
-      wordIndex = -1;
-      skip();
+  const body = document.querySelector("body");
+  body.addEventListener("keyup", e => {
+    if (e.keyCode == 49) {
+      refresh();
+      e.preventDefault();
     }
-    guessBar.value = "";
-    loadThreeWords();
-  }
+  });
+  const guessBar = document.querySelector("input[name='userAnswer']");
+  guessBar.addEventListener("keyup", function(e) {
+    if (e.keyCode == 13) {
+      if (guessBar.value == wordsArray[wordIndex]["word"]) {
+        score++;
+        skip();
+      } else {
+        // let wrong = false;
+        let input = document.getElementById("shake");
+        input.classList.add("wrong");
+        setTimeout(function() {
+          input.classList.remove("wrong");
+        }, 100);
+      }
+      guessBar.value = "";
+      loadThreeWords();
+    }
+  });
 
   const body = document.querySelector("body");
   body.addEventListener("keyup", e => {
