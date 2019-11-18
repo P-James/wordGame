@@ -9,7 +9,7 @@
         <h1>Synonym:</h1>  
         <p>house, household, menage</p>
     </div>
-        <div class="inputDiv">
+    <div class="inputDiv">
         <form method="POST" action="index.php?action=playGame">
             <input type="submit" id="startGameButton" value="start game">
         </form>
