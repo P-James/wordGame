@@ -7,9 +7,10 @@
   timeDisplay.textContent = i;
   let keyPressStarted = false;
   guessBar.addEventListener("keyup", timerStart);
+
   function timerStart() {
     if (keyPressStarted === false) {
-      setInterval(function() {
+      setInterval(function () {
         flashStyle();
         if (i >= 0) {
           timeDisplay.textContent = i;
@@ -19,6 +20,7 @@
       keyPressStarted = true;
     }
   }
+
   function flashStyle() {
     if (i <= 58) {
       timeDisplay.classList.add("bigFlash");
