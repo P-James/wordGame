@@ -6,18 +6,19 @@
     </div>
     <div class="defDiv">
         <h1>Definition:</h1>  
-        <p><?= $definition= "def"; ?></p> <!-- this is where youll insert the definition -->
+        <p class=definition></p> <!-- this is where youll insert the definition -->
     </div>
     <div class="synDiv">
         <h1>Synonym:</h1>  
-        <p><?=$synonym="syn"; ?></p> <!-- this is where youll insert the synonymns -->
+        <p class=synonyms></p> <!-- this is where youll insert the synonymns -->
     </div>
         <div class="inputDiv">
         <input name="userAnswer" type="text" autocomplete="off">
     </div>
 </div>
 
-<script src="./public/js/clock.js"></script>
+<!-- <script src="./public/js/clock.js"></script> -->
+<script src="./public/js/apiRequest.js"></script>
 
 <?php
 $content= ob_get_clean();
