@@ -2,6 +2,7 @@
 // object keys: word (string), definitions (array), synonyms (nested arrays)
 
 let wordsArray = [];
+let score = 0;
 
 // Get a random word that is:
 // between 3 and 10 letters long
@@ -11,14 +12,15 @@ let wordsArray = [];
 function getData() {
   let responseObj = {};
   fetch(
-      "https://wordsapiv1.p.rapidapi.com/words/?letterPattern=%5E%5B%5E%5CW0-9%5Cs%5D%7B3%2C10%7D&frequencyMin=5&random=true", {
-        method: "GET",
-        headers: {
-          "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
-          "x-rapidapi-key": "30f5aff5d9msha651378ce5a3dcap1cfe17jsn3eaca2fbd7b5"
-        }
+    "https://wordsapiv1.p.rapidapi.com/words/?letterPattern=%5E%5B%5E%5CW0-9%5Cs%5D%7B3%2C10%7D&frequencyMin=5&random=true",
+    {
+      method: "GET",
+      headers: {
+        "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
+        "x-rapidapi-key": "30f5aff5d9msha651378ce5a3dcap1cfe17jsn3eaca2fbd7b5"
       }
-    )
+    }
+  )
     .then(response => {
       return response.json();
     })
@@ -52,15 +54,20 @@ function getData() {
     });
 }
 // setTimeout necessary to allow http requests to complete before sending new request.
-for (let i = 0; i < 3; i++) {
-  setTimeout(getData());
+function loadThreeWords() {
+  for (let i = 0; i < 3; i++) {
+    setTimeout(getData());
+  }
 }
+loadThreeWords();
+
 console.log(wordsArray);
 
 //Render to DOM
 // Initial render to DOM - to be called once at start of game
 const definitionOutput = document.querySelector(".definition");
 const synonymsOutput = document.querySelector(".synonyms");
+const synsQty = 3;
 
 function render() {
   if (!wordsArray[0]) {
@@ -68,7 +75,7 @@ function render() {
     setTimeout(render, 500);
   } else {
     definitionOutput.textContent = wordsArray[0]["definitions"][0];
-    synonymsOutput.textContent = wordsArray[0]["synonyms"][0];
+    synonymsOutput.textContent = wordsArray[0]["synonyms"][0].slice(0, synsQty);
   }
 }
 let defIndex = 0;
@@ -80,11 +87,15 @@ function refresh() {
     defIndex = 0;
     definitionOutput.textContent =
       wordsArray[wordIndex]["definitions"][defIndex];
-    synonymsOutput.textContent = wordsArray[wordIndex]["synonyms"][defIndex];
+    synonymsOutput.textContent = wordsArray[wordIndex]["synonyms"][
+      defIndex
+    ].slice(0, synsQty);
   } else {
     definitionOutput.textContent =
       wordsArray[wordIndex]["definitions"][defIndex];
-    synonymsOutput.textContent = wordsArray[wordIndex]["synonyms"][defIndex];
+    synonymsOutput.textContent = wordsArray[wordIndex]["synonyms"][
+      defIndex
+    ].slice(0, synsQty);
   }
 }
 
@@ -100,16 +111,9 @@ function skip() {
     wordIndex = -1;
     skip();
   }
+  guessBar.value = "";
+  loadThreeWords();
 }
-
-const goBtn = document.querySelector("#go");
-goBtn.addEventListener("click", render);
-
-const refreshBtn = document.querySelector("#refresh");
-refreshBtn.addEventListener("click", refresh);
-
-const skipBtn = document.querySelector("#skip");
-skipBtn.addEventListener("click", skip);
 
 const body = document.querySelector("body");
 body.addEventListener("keyup", e => {
@@ -118,3 +122,15 @@ body.addEventListener("keyup", e => {
     e.preventDefault();
   }
 });
+const guessBar = document.querySelector("input[name='userAnswer']");
+guessBar.addEventListener("keyup", function(e) {
+  if (e.keyCode == 13) {
+    if (guessBar.value == wordsArray[wordIndex]["word"]) {
+      score++;
+      skip();
+    } else {
+      console.log("incorrect");
+    }
+  }
+});
+window.onload = render;

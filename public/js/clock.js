@@ -1,18 +1,27 @@
-{
-    let i = 31;
-    let score = 27;
+//     window.location.href = "./model/redirect.php?score=" + score;
+//     clearInterval(countdown);
 
-    var timer = document.getElementById('timer');
-    // console.log(list);
-
-    let countdown = setInterval(function () {
+const timeDisplay = document.getElementById("timer");
+const guessBar = document.querySelector("input[name='userAnswer']");
+let i = 60;
+timeDisplay.textContent = i;
+let score = 0;
+let keyPressStarted = false;
+guessBar.addEventListener("keyup", timerStart);
+function timerStart() {
+  if (keyPressStarted === false) {
+    setInterval(function() {
+      flashStyle();
+      if (i >= 0) {
+        timeDisplay.textContent = i;
         i--;
-        if (i > 0) {
-            // console.log(i);
-            timer.innerHTML = "<p>" + i + "</p>";
-        } else {
-            window.location.href = "../../model/redirect.php?score=" + score;
-            clearInterval(countdown);
-        }
+      }
     }, 1000);
+    keyPressStarted = true;
+  }
+}
+function flashStyle() {
+  if (i <= 58) {
+    timeDisplay.classList.add("bigFlash");
+  }
 }
