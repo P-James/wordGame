@@ -6,7 +6,9 @@ body {
     background-size: cover;
     background-color: #999;
 
-    height: 98vh;
+    height: 100%;
+    min-height: 98vh;
+    /* max-height: 98vh; */
 
     display: flex;
     justify-content: center;
@@ -71,7 +73,7 @@ input {
     margin-bottom: 50px;
 }
 
-#content button {
+/* #content button {
     font-size: 1.5em;
     color: white;
 
@@ -83,7 +85,7 @@ input {
     background-color: #161B2F;
     border: 5px solid rgb(214, 220, 235);
     border-radius: 15px;
-}
+} */
 
 #content input {
     text-align: center;
@@ -100,6 +102,10 @@ input {
     border-radius: 15px;
 }
 
+#content input:hover {
+    /* color: red; */
+    animation: shake 100ms linear;
+}
 
 /* ___________ highscore pg 1 styling ___________ */
 
@@ -266,4 +272,42 @@ input {
     text-align: center;
     padding-top: 30px;
     font-size: 1.5em;
+}
+
+
+
+
+/* ___________________ SHAKE ANIMATION / wrong answer ____________________ */
+
+@keyframes shake {
+    0% {
+        transform: translate(5px, 0);
+    }
+
+    50% {
+        transform: translate(-5px, 0);
+    }
+
+    100% {
+        transform: translate(5px, 0);
+    }
+}
+
+/* ___________ Timer red and enlarge ___________ */
+@keyframes bigFlash {
+    0% {
+        font-size: 16px;
+    }
+
+    10% {
+        font-size: 24px;
+    }
+
+    20% {
+        font-size: 16px;
+    }
+}
+
+.bigFlash {
+    animation: bigFlash 1000ms ease-in-out infinite;
 }
