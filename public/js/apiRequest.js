@@ -101,6 +101,20 @@
     }
   }
 
+  function skip() {
+    defIndex = 0; // refresh going back to first word definitions...
+    if (wordIndex < wordsArray.length - 1) {
+      definitionOutput.textContent =
+        wordsArray[wordIndex + 1]["definitions"][defIndex];
+      synonymsOutput.textContent =
+        wordsArray[wordIndex + 1]["synonyms"][defIndex];
+      wordIndex++;
+    } else {
+      wordIndex = -1;
+      skip();
+    }
+  }
+
   const body = document.querySelector("body");
   body.addEventListener("keyup", e => {
     if (e.keyCode == 49) {
@@ -108,14 +122,16 @@
       e.preventDefault();
     }
   });
+
   const guessBar = document.querySelector("input[name='userAnswer']");
   guessBar.addEventListener("keyup", function (e) {
     if (e.keyCode == 13) {
       if (guessBar.value == wordsArray[wordIndex]["word"]) {
+        console.log("correct");
         score++;
         skip();
       } else {
-        // let wrong = false;
+        console.log("incorrect");
         let input = document.getElementById('shake');
         input.classList.add("wrong");
         setTimeout(function () {
@@ -127,23 +143,5 @@
     }
   });
 
-  const body = document.querySelector("body");
-  body.addEventListener("keyup", e => {
-    if (e.keyCode == 49) {
-      refresh();
-      e.preventDefault();
-    }
-  });
-  const guessBar = document.querySelector("input[name='userAnswer']");
-  guessBar.addEventListener("keyup", function (e) {
-    if (e.keyCode == 13) {
-      if (guessBar.value == wordsArray[wordIndex]["word"]) {
-        score++;
-        skip();
-      } else {
-        console.log("incorrect");
-      }
-    }
-  });
   window.onload = render;
 }
