@@ -7,7 +7,7 @@ ob_start(); ?>
         <div class="score">
             <p>your score was</p>
             <h1 id="userScore"><?= $userScore ?></h1>
-            <a href="#">Play again?</a>
+            <a href="index.php?action=playGame">Play again?</a>
         </div>
         <div class="inputsBottom">
             <div class="inputDiv">
@@ -16,7 +16,7 @@ ob_start(); ?>
                 <input type="text" name="userNameInput">
             </div>
             <div class="toHighscorePg">
-            <a href="#">go to HIGH SCORES</a>
+            <a href="index.php?action=highScorePg">go to HIGH SCORES</a>
             </div>
         </div>
     </div>

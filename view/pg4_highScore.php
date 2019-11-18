@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="playagainLinkHighScorePg">
-        <a href="#">Play again?</a>
+        <a href="index.php?action=playGame">Play again?</a>
     </div>
 
 
