@@ -113,6 +113,10 @@ input {
     animation: shake 100ms linear;
 }
 
+#skipbttn {
+    padding-right: 50px;
+}
+
 /* ___________ highscore pg 1 styling ___________ */
 
 #highScorePg1 {
@@ -178,7 +182,7 @@ input {
 .inputDiv {
     line-height: 2.3em;
     margin-right: 10%;
-    /* width: 600px; */
+    text-align: center;
 }
 
 .toHighscorePg {

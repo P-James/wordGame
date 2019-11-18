@@ -15,9 +15,14 @@
         <h1>Synonym:</h1>  
         <p class="synonyms"></p> <!-- this is where youll insert the synonymns -->
     </div>
-        <div class="inputDiv">
-        <input id="shake" name="userAnswer" type="text" autocomplete="off">
+    <div class="inputDiv">
+            <input id="shake" name="userAnswer" type="text" autocomplete="off">
+        <div id="bttns">
+            <a id="skipbttn" name="skip">skip</a>
+            <a id="refreshbttn" name="refresh">refresh</a>
+        </div>
     </div>
+    
 </div>
 
 <script src="./public/js/clock.js"></script>
