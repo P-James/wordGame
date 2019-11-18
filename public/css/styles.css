@@ -29,7 +29,7 @@ img {
 fieldset {
     height: 100%;
     background-color: rgba(43, 22, 51, 0.6);
-    border: 5px solid #FF1FCD;
+    border: 5px solid #ff1fcd;
     border-radius: 20px;
 }
 
@@ -43,14 +43,14 @@ fieldset {
 /* _______________ CONTENT STYLING __________________ */
 
 #content {
-    font-family: 'Press Start 2P', sans-serif;
+    font-family: "Press Start 2P", sans-serif;
     color: rgb(214, 220, 235);
     position: relative;
 }
 
 button,
 input {
-    font-family: 'Press Start 2P', sans-serif;
+    font-family: "Press Start 2P", sans-serif;
 }
 
 #content p,
@@ -97,7 +97,7 @@ input {
     width: 80%;
     height: 90px;
 
-    background-color: #161B2F;
+    background-color: #161b2f;
     border: 5px solid rgb(214, 220, 235);
     border-radius: 15px;
 }
@@ -108,7 +108,6 @@ input {
 
 /* ___________ highscore pg 1 styling ___________ */
 
-
 #highScorePg1 {
     margin: auto;
     padding: 0px 50px;
@@ -117,11 +116,11 @@ input {
 }
 
 #highScorePg1 {
-    font-family: 'Press Start 2P', sans-serif;
+    font-family: "Press Start 2P", sans-serif;
 }
 
 input {
-    font-family: 'Press Start 2P', sans-serif;
+    font-family: "Press Start 2P", sans-serif;
 }
 
 .score {
@@ -156,7 +155,7 @@ input {
     width: 70%;
     height: 80px;
 
-    background-color: #161B2F;
+    background-color: #161b2f;
     border: 5px solid rgb(214, 220, 235);
     border-radius: 15px;
 }
@@ -180,14 +179,7 @@ input {
     line-height: 2.3em;
 }
 
-
-
-
-
-
-
 /* ___________ Score pg 2 styling ___________ */
-
 
 #scorePg2 {
     margin: auto;
@@ -198,11 +190,11 @@ input {
 }
 
 #scorePg2 {
-    font-family: 'Press Start 2P', sans-serif;
+    font-family: "Press Start 2P", sans-serif;
 }
 
 input {
-    font-family: 'Press Start 2P', sans-serif;
+    font-family: "Press Start 2P", sans-serif;
 }
 
 .scorePg2 {
@@ -218,16 +210,11 @@ input {
     line-height: 1em;
 }
 
-
 #scorePg2 a {
     color: rgb(214, 220, 235);
     font-size: 1.2em;
     line-height: 4em;
 }
-
-
-
-
 
 /* ___________ HighScore page styling ___________ */
 
@@ -237,7 +224,7 @@ input {
     padding-top: 10px;
     color: rgb(214, 220, 235);
     text-align: center;
-    font-family: 'Press Start 2P', sans-serif;
+    font-family: "Press Start 2P", sans-serif;
 
     display: flex;
     flex-direction: row;
@@ -247,7 +234,7 @@ input {
 #title {
     padding-top: 40px;
     color: rgb(214, 220, 235);
-    font-family: 'Press Start 2P', sans-serif;
+    font-family: "Press Start 2P", sans-serif;
     text-align: center;
 }
 
@@ -267,14 +254,11 @@ input {
 .playagainLinkHighScorePg a {
     display: block;
     color: rgb(214, 220, 235);
-    font-family: 'Press Start 2P', sans-serif;
+    font-family: "Press Start 2P", sans-serif;
     text-align: center;
     padding-top: 30px;
     font-size: 1.5em;
 }
-
-
-
 
 /* ___________________ SHAKE ANIMATION / wrong answer ____________________ */
 
@@ -309,4 +293,5 @@ input {
 
 .bigFlash {
     animation: bigFlash 1000ms ease-in-out infinite;
+    color: red;
 }
