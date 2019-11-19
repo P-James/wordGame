@@ -16,5 +16,6 @@ function enterHighscore(){
 }
 
 function highScorePg(){
+    require("./model/saveScore.php");
     require("./view/pg4_highScore.php");
 }

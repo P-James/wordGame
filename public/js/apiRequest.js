@@ -130,6 +130,8 @@ function correctOrNot(e) {
     if (guessBar.value == wordsArray[wordIndex]["word"]) {
       correctSound.play();
       score++;
+      let scoreDisplay = document.getElementById("showScore");
+      scoreDisplay.textContent = score;
       skip();
     } else {
       wrongSound.play();
