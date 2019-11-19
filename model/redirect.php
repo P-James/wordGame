@@ -1,6 +1,6 @@
 <?php
     include 'dbconnect.php';
-    $res = $db->query("SELECT scores FROM highscores ORDER BY scores LIMIT 0,8");
+    $res = $db->query("SELECT scores FROM highscores ORDER BY scores DESC LIMIT 0,8");
     $newScore = intval($_GET['score']);
     while($data = $res->fetch()){
         if($newScore > $data['scores']){

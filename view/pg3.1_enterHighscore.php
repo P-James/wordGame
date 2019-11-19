@@ -1,12 +1,11 @@
-<?php 
-$userScore=27;
+<?php
 ob_start(); ?>
 
 
     <div id="highScorePg1">
         <div class="score">
             <p>your score was</p>
-            <h1 id="userScore"><?= $userScore ?></h1>
+            <h1 id="userScore"><?= $_POST['score'] ?></h1>
             <a href="index.php?action=playGame">Play again?</a>
         </div>
         <div class="inputsBottom">

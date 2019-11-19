@@ -120,17 +120,19 @@ body.addEventListener("keyup", e => {
     e.preventDefault();
   }
 });
-let score = 0;
-const guessBar = document.querySelector("input[name='userAnswer']");
-guessBar.addEventListener("keyup", function(e) {
+
+const wrongSound = new Audio("public/sounds/wrong.mp3");
+const correctSound = new Audio("public/sounds/correct.mp3");
+
+// Check if score is correct, includes score increment
+function correctOrNot(e) {
   if (e.keyCode == 13) {
     if (guessBar.value == wordsArray[wordIndex]["word"]) {
-      console.log("correct");
+      correctSound.play();
       score++;
-      console.log(score);
       skip();
     } else {
-      console.log("incorrect");
+      wrongSound.play();
       let input = document.getElementById("shake");
       input.classList.add("wrong");
       setTimeout(function() {
@@ -140,6 +142,45 @@ guessBar.addEventListener("keyup", function(e) {
     guessBar.value = "";
     loadThreeWords();
   }
+}
+
+let score = 0;
+const guessBar = document.querySelector("input[name='userAnswer']");
+guessBar.addEventListener("keyup", correctOrNot);
+window.onload = render;
+
+// Clock.js starts here
+const timeDisplay = document.getElementById("timer");
+let i = 60;
+timeDisplay.textContent = i;
+let keyPressStarted = false;
+guessBar.addEventListener("keyup", function() {
+  if (keyPressStarted === false) {
+    timerStart();
+  }
 });
 
-window.onload = render;
+function timerStart() {
+  setInterval(function() {
+    flashStyle();
+    if (i >= 0) {
+      timeDisplay.textContent = i;
+      i--;
+    } else if (i === -1) {
+      gameEnd();
+    }
+  }, 1000);
+  keyPressStarted = true;
+}
+
+function flashStyle() {
+  if (i <= 15) {
+    timeDisplay.classList.add("bigFlash");
+  }
+}
+const storeScoreForm = document.getElementById("hiddenscore"); //this is the hidden form
+let storeScoreInput = document.getElementById("scoreinput");
+function gameEnd() {
+  storeScoreInput.value = score; // Put the score in the hidden form for submitting
+  storeScoreForm.submit();
+}
