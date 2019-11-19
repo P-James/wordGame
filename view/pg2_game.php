@@ -1,8 +1,12 @@
 <?php ob_start(); ?>
 
 <div id="content"> 
-    <div id="timer">
+    
+    <div id="side">
+        Score: <span id="showScore"> </span> 
+        <div id="timer"> </div>
     </div>
+    
     <div class="defDiv">
         <h1>Definition:</h1>  
         <p class="definition"></p> <!-- this is where youll insert the definition -->
@@ -11,8 +15,12 @@
         <h1>Synonym:</h1>  
         <p class="synonyms"></p> <!-- this is where youll insert the synonymns -->
     </div>
-        <div class="inputDiv">
-        <input id="shake" name="userAnswer" type="text" autocomplete="off">
+    <div class="inputDiv">
+            <input id="shake" name="userAnswer" type="text" autocomplete="off">
+        <div id="bttns">
+            <a id="skipbttn" name="skip">skip</a>
+            <a id="refreshbttn" name="refresh">refresh</a>
+        </div>
     </div>
     <form id="hiddenscore" action="index.php?action=enterHighscore" method="POST">  <!-- Used to submit score to backend -->
     <input id="scoreinput" type="hidden" name="score" value=""></form>

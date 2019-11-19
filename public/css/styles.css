@@ -64,9 +64,15 @@ input {
   text-decoration: underline;
 }
 
-#timer {
+#side {
   position: absolute;
   right: 100px;
+  display: inline;
+  text-align: right;
+}
+
+#timer {
+  padding-top: 2em;
 }
 
 #content div {
@@ -104,6 +110,10 @@ input {
 
 .wrong {
   animation: shake 100ms linear;
+}
+
+#skipbttn {
+  padding-right: 50px;
 }
 
 /* ___________ highscore pg 1 styling ___________ */
@@ -171,7 +181,7 @@ input {
 .inputDiv {
   line-height: 2.3em;
   margin-right: 10%;
-  /* width: 600px; */
+  text-align: center;
 }
 
 .toHighscorePg {
