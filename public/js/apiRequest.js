@@ -108,7 +108,7 @@ function skip() {
     ].slice(0, synsQty);
     wordIndex++;
   } else {
-    wordIndex = -1;
+    wordIndex = 0;
     skip();
   }
 }
