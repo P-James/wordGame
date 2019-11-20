@@ -3,7 +3,7 @@
 <div id="content"> 
     
     <div id="side">
-        Score: <span id="showScore"> </span> 
+        Score: <span id="showScore"></span> 
         <div id="timer"> </div>
     </div>
     
@@ -22,10 +22,10 @@
             <a id="refreshbttn" name="refresh">refresh</a>
         </div>
     </div>
-    
+    <form id="hiddenscore" action="index.php?action=enterHighscore" method="POST">  <!-- Used to submit score to backend -->
+    <input id="scoreinput" type="hidden" name="score" value=""></form>
 </div>
 
-<script src="./public/js/clock.js"></script>
 <script src="./public/js/apiRequest.js"></script>
 
 <?php

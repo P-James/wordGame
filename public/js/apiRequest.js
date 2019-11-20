@@ -2,8 +2,6 @@
 // object keys: word (string), definitions (array), synonyms (nested arrays)
 
 let wordsArray = [];
-let score = 0;
-let scoreDisplay = document.getElementById("showScore");
 
 // Get a random word that is:
 // between 3 and 10 letters long
@@ -13,14 +11,15 @@ let scoreDisplay = document.getElementById("showScore");
 function getData() {
   let responseObj = {};
   fetch(
-      "https://wordsapiv1.p.rapidapi.com/words/?letterPattern=%5E%5B%5E%5CW0-9%5Cs%5D%7B3%2C10%7D&frequencyMin=5&random=true", {
-        method: "GET",
-        headers: {
-          "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
-          "x-rapidapi-key": "30f5aff5d9msha651378ce5a3dcap1cfe17jsn3eaca2fbd7b5"
-        }
+    "https://wordsapiv1.p.rapidapi.com/words/?letterPattern=%5E%5B%5E%5CW0-9%5Cs%5D%7B3%2C10%7D&frequencyMin=5&random=true",
+    {
+      method: "GET",
+      headers: {
+        "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
+        "x-rapidapi-key": "30f5aff5d9msha651378ce5a3dcap1cfe17jsn3eaca2fbd7b5"
       }
-    )
+    }
+  )
     .then(response => {
       return response.json();
     })
@@ -54,12 +53,12 @@ function getData() {
     });
 }
 // setTimeout necessary to allow http requests to complete before sending new request.
-function loadThreeWords() {
-  for (let i = 0; i < 3; i++) {
+function loadTwoWords() {
+  for (let i = 0; i < 2; i++) {
     setTimeout(getData());
   }
 }
-loadThreeWords();
+loadTwoWords();
 
 console.log(wordsArray);
 
@@ -75,10 +74,7 @@ function render() {
     setTimeout(render, 500);
   } else {
     definitionOutput.textContent = wordsArray[0]["definitions"][0];
-    synonymsOutput.textContent = wordsArray[0]["synonyms"][0].slice(
-      0,
-      synsQty
-    );
+    synonymsOutput.textContent = wordsArray[0]["synonyms"][0].slice(0, synsQty);
   }
 }
 let defIndex = 0;
@@ -86,7 +82,7 @@ let wordIndex = 0;
 
 function refresh() {
   defIndex++;
-  if (defIndex == wordsArray[0]["definitions"].length) {
+  if (!wordsArray[wordIndex]["synonyms"][defIndex]) {
     defIndex = 0;
     definitionOutput.textContent =
       wordsArray[wordIndex]["definitions"][defIndex];
@@ -107,8 +103,9 @@ function skip() {
   if (wordIndex < wordsArray.length - 1) {
     definitionOutput.textContent =
       wordsArray[wordIndex + 1]["definitions"][defIndex];
-    synonymsOutput.textContent =
-      wordsArray[wordIndex + 1]["synonyms"][defIndex];
+    synonymsOutput.textContent = wordsArray[wordIndex + 1]["synonyms"][
+      defIndex
+    ].slice(0, synsQty);
     wordIndex++;
   } else {
     wordIndex = -1;
@@ -124,25 +121,68 @@ body.addEventListener("keyup", e => {
   }
 });
 
-const guessBar = document.querySelector("input[name='userAnswer']");
-guessBar.addEventListener("keyup", function (e) {
+const wrongSound = new Audio("public/sounds/wrong.mp3");
+const correctSound = new Audio("public/sounds/correct.mp3");
+
+// Check if score is correct, includes score increment
+function correctOrNot(e) {
   if (e.keyCode == 13) {
     if (guessBar.value == wordsArray[wordIndex]["word"]) {
-      console.log("correct");
+      correctSound.play();
       score++;
+      let scoreDisplay = document.getElementById("showScore");
       scoreDisplay.textContent = score;
       skip();
+      loadTwoWords();
     } else {
-      console.log("incorrect");
-      let input = document.getElementById('shake');
+      wrongSound.play();
+      let input = document.getElementById("shake");
       input.classList.add("wrong");
-      setTimeout(function () {
+      setTimeout(function() {
         input.classList.remove("wrong");
-      }, 100)
+      }, 100);
     }
     guessBar.value = "";
-    loadThreeWords();
+  }
+}
+
+let score = 0;
+const guessBar = document.querySelector("input[name='userAnswer']");
+guessBar.addEventListener("keyup", correctOrNot);
+window.onload = render;
+
+// Clock.js starts here
+const timeDisplay = document.getElementById("timer");
+let i = 60;
+timeDisplay.textContent = i;
+let keyPressStarted = false;
+guessBar.addEventListener("keyup", function() {
+  if (keyPressStarted === false) {
+    timerStart();
   }
 });
 
-window.onload = render;
+function timerStart() {
+  setInterval(function() {
+    flashStyle();
+    if (i >= 0) {
+      timeDisplay.textContent = i;
+      i--;
+    } else if (i === -1) {
+      gameEnd();
+    }
+  }, 1000);
+  keyPressStarted = true;
+}
+
+function flashStyle() {
+  if (i <= 15) {
+    timeDisplay.classList.add("bigFlash");
+  }
+}
+const storeScoreForm = document.getElementById("hiddenscore"); //this is the hidden form
+let storeScoreInput = document.getElementById("scoreinput");
+function gameEnd() {
+  storeScoreInput.value = score; // Put the score in the hidden form for submitting
+  storeScoreForm.submit();
+}
