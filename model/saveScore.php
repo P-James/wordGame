@@ -14,7 +14,17 @@ function saveScore ($params){
 }
 function checkUsername($username){
     $db = require "dbconnect.php";
-    $query = $db->prepare("SELECT id FROM scores WHERE username = :username");
+    $query = $db->prepare("SELECT
+    id,
+    username
+  FROM
+    scores
+  WHERE
+    username = :username
+  ORDER BY
+    score DESC
+  LIMIT
+    0, 10");
     $query->execute([
         'username'=>$username,
     ]);

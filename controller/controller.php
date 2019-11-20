@@ -24,6 +24,7 @@ function highScorePg($params){
         require("./view/pg3.1_enterHighscore.php");
     } else{
         require("./model/redirect.php");
+        // deleteScoresPastTopTen();
         $highScores = loadHighScores(8);
         require("./view/pg4_highScore.php");
     }

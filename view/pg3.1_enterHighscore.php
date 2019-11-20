@@ -12,7 +12,7 @@ ob_start(); ?>
             <div class="inputDiv">
                 <p>save your score?</p>
                 <p>enter your username below</p>
-                <span> <?php if (isset($alreadyUsed)) {echo $alreadyUsed;}?></p>
+                <span> <?php if (!empty(isset($alreadyUsed))) {echo $alreadyUsed;}?></p>
                 <form id="usernameInput" action="index.php?action=highScorePg" method="POST">
                 <input type="text" name="userNameInput">
                 <input type="hidden" name="score" value="<?= $_POST['score']?>"></form>
