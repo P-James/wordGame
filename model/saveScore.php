@@ -14,7 +14,17 @@ function saveScore ($params){
 }
 function checkUsername($username){
     $db = require "dbconnect.php";
-    $query = $db->prepare("SELECT id FROM scores WHERE username = :username");
+    $query = $db->prepare("SELECT
+    id,
+    username
+  FROM
+    scores
+  WHERE
+    username = :username
+  ORDER BY
+    score DESC
+  LIMIT
+    0, 10");
     $query->execute([
         'username'=>$username,
     ]);
@@ -27,8 +37,11 @@ function checkUsername($username){
 //sorts db in descending
 //deletes anything after the 10th highscore
 
-function deleteScoresPastTopTen(){
-    $db = require "dbconnect.php";
-    $query = $db->query("DELETE FROM scores ORDER BY score DESC limit 10,11");
-
-}
+// function deleteScoresPastTopTen(){
+//     $db = require "dbconnect.php";
+//     $query = $db->prepare("SELECT * FROM scores");
+//     $number = $query->fetchAll();
+//     if (count($number) > 10){
+//         $query = $db->query("DELETE FROM `scores` ORDER BY score ASC LIMIT 1");
+//     }
+// }
