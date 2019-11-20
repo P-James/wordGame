@@ -191,3 +191,7 @@ const skipText = document.getElementById("skipbttn");
 skipText.addEventListener("click", function(e) {
   skip();
 });
+const refreshDef = document.getElementById("refreshbttn");
+refreshDef.addEventListener("click", function(e) {
+  refresh();
+});

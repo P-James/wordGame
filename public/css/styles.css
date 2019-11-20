@@ -305,3 +305,9 @@ input {
   animation: bigFlash 1000ms ease-in-out infinite;
   color: red;
 }
+#skipbttn {
+  cursor: pointer;
+}
+#refreshbttn {
+  cursor: pointer;
+}
