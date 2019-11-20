@@ -53,12 +53,12 @@ function getData() {
     });
 }
 // setTimeout necessary to allow http requests to complete before sending new request.
-function loadThreeWords() {
-  for (let i = 0; i < 3; i++) {
+function loadTwoWords() {
+  for (let i = 0; i < 2; i++) {
     setTimeout(getData());
   }
 }
-loadThreeWords();
+loadTwoWords();
 
 console.log(wordsArray);
 
@@ -133,6 +133,7 @@ function correctOrNot(e) {
       let scoreDisplay = document.getElementById("showScore");
       scoreDisplay.textContent = score;
       skip();
+      loadTwoWords();
     } else {
       wrongSound.play();
       let input = document.getElementById("shake");
@@ -142,7 +143,6 @@ function correctOrNot(e) {
       }, 100);
     }
     guessBar.value = "";
-    loadThreeWords();
   }
 }
 

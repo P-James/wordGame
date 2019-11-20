@@ -15,7 +15,17 @@ function enterHighscore(){
     require("./view/pg3.1_enterHighscore.php");
 }
 
-function highScorePg(){
+function highScorePg($params){
     require("./model/saveScore.php");
-    require("./view/pg4_highScore.php");
+    $user = saveScore ($params);
+    if($user == "used"){
+        // display already used pick an other one
+        $alreadyUsed = "already used";
+        require("./view/pg3.1_enterHighscore.php");
+    } else{
+         require("./model/redirect.php");
+        $highScores = loadHighScores(8);
+        require("./view/pg4_highScore.php");
+    }
+   
 }

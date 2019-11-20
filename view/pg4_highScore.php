@@ -5,24 +5,22 @@
     </div>
     <div id="highScoreDiv">
         <div class="names">
-            <p><?= $name="asdhfkjahs" ?></p>
-            <p><?= $name="asdhfkjahs" ?></p>
-            <p><?= $name="asdhfkjahs" ?></p>
-            <p><?= $name="asdhfkjahs" ?></p>
-            <p><?= $name="asdhfkjahs" ?></p>
-            <p><?= $name="asdhfkjahs" ?></p>
-            <p><?= $name="asdhfkjahs" ?></p>
-            <p><?= $name="asdhfkjahs" ?></p>
+        <?php 
+            for ($i = 0; $i<count($highScores);$i++){
+                $username = $highScores[$i]['username'];
+                echo "<p> $username</p>";
+            }
+            
+        ?>
         </div>
         <div class="highscores">
-            <p><?= $name="1122" ?></p>
-            <p><?= $name="997" ?></p>
-            <p><?= $name="543" ?></p>
-            <p><?= $name="482" ?></p>
-            <p><?= $name="1122" ?></p>
-            <p><?= $name="997" ?></p>
-            <p><?= $name="543" ?></p>
-            <p><?= $name="482" ?></p>
+        <?php 
+            for ($i = 0; $i<count($highScores);$i++){
+                $score = $highScores[$i]['score'];
+                echo "<p> $score</p>";
+            }
+            
+        ?>
         </div>
     </div>
     <div class="playagainLinkHighScorePg">
