@@ -22,13 +22,3 @@ function checkUsername($username){
     return ($username) ? true : false;
 }
 
-
-//adds username/score to db
-//sorts db in descending
-//deletes anything after the 10th highscore
-
-function deleteScoresPastTopTen(){
-    $db = require "dbconnect.php";
-    $query = $db->query("DELETE FROM scores ORDER BY score DESC limit 10,11");
-
-}

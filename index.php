@@ -16,6 +16,7 @@ if (isset($_GET['action'])) {
     }
     if($_GET['action'] == "highScorePg"){
         highScorePg($_POST);
+        
     }
 
     
