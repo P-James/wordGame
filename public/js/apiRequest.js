@@ -186,3 +186,8 @@ function gameEnd() {
   storeScoreInput.value = score; // Put the score in the hidden form for submitting
   storeScoreForm.submit();
 }
+
+const skipText = document.getElementById("skipbttn");
+skipText.addEventListener("click", function(e) {
+  skip();
+});
