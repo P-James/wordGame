@@ -112,7 +112,12 @@ input {
 }
 
 #skipbttn {
-  padding-right: 50px;
+  margin-right: 50px;
+  cursor: pointer;
+}
+
+#skipbttn:active {
+  color: #ff1fcd;
 }
 
 /* ___________ highscore pg 1 styling ___________ */
@@ -303,4 +308,12 @@ input {
 .bigFlash {
   animation: bigFlash 1000ms ease-in-out infinite;
   color: red;
+}
+
+#refreshbttn {
+  cursor: pointer;
+}
+
+#refreshbttn:active {
+  color: #ff1fcd;
 }

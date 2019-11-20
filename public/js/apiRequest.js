@@ -108,7 +108,7 @@ function skip() {
     ].slice(0, synsQty);
     wordIndex++;
   } else {
-    wordIndex = -1;
+    wordIndex = 0;
     skip();
   }
 }
@@ -190,4 +190,8 @@ function gameEnd() {
 const skipText = document.getElementById("skipbttn");
 skipText.addEventListener("click", function(e) {
   skip();
+});
+const refreshDef = document.getElementById("refreshbttn");
+refreshDef.addEventListener("click", function(e) {
+  refresh();
 });
