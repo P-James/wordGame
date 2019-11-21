@@ -48,13 +48,16 @@ function getData(callback) {
         wordsArray.push(responseObj);
       }
     })
+    .then(function() {
+      if (callback) {
+        callback();
+      }
+    })
     .catch(err => {
       console.log(err);
     });
-  if (callback) {
-    callback();
-  }
 }
+
 // setTimeout necessary to allow http requests to complete before sending new request.
 function loadWords(qty, callback) {
   for (let i = 0; i < qty; i++) {
