@@ -11,15 +11,14 @@ let wordsArray = [];
 function getData(callback) {
   let responseObj = {};
   fetch(
-    "https://wordsapiv1.p.rapidapi.com/words/?letterPattern=%5E%5B%5E%5CW0-9%5Cs%5D%7B3%2C10%7D&frequencyMin=5&random=true",
-    {
-      method: "GET",
-      headers: {
-        "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
-        "x-rapidapi-key": "30f5aff5d9msha651378ce5a3dcap1cfe17jsn3eaca2fbd7b5"
+      "https://wordsapiv1.p.rapidapi.com/words/?letterPattern=%5E%5B%5E%5CW0-9%5Cs%5D%7B3%2C10%7D&frequencyMin=5&random=true", {
+        method: "GET",
+        headers: {
+          "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
+          "x-rapidapi-key": "30f5aff5d9msha651378ce5a3dcap1cfe17jsn3eaca2fbd7b5"
+        }
       }
-    }
-  )
+    )
     .then(response => {
       return response.json();
     })
@@ -100,6 +99,8 @@ function skip() {
 // Check if score is correct, includes score increment
 const guessBar = document.querySelector("input[name='userAnswer']");
 let score = 0;
+
+
 function correctOrNot(e) {
   if (e.keyCode == 13) {
     if (guessBar.value == wordsArray[wordIndex]["word"]) {
@@ -113,7 +114,7 @@ function correctOrNot(e) {
       wrongSound.play();
       let input = document.getElementById("shake");
       input.classList.add("wrong");
-      setTimeout(function() {
+      setTimeout(function () {
         input.classList.remove("wrong");
       }, 100);
     }
@@ -164,14 +165,14 @@ const timeDisplay = document.getElementById("timer");
 let i = 60;
 timeDisplay.textContent = i;
 let keyPressStarted = false;
-guessBar.addEventListener("keyup", function() {
+guessBar.addEventListener("keyup", function () {
   if (keyPressStarted === false) {
     timerStart();
   }
 });
 
 function timerStart() {
-  setInterval(function() {
+  setInterval(function () {
     flashStyle();
     if (i >= 0) {
       timeDisplay.textContent = i;
@@ -190,13 +191,14 @@ function flashStyle() {
 }
 const storeScoreForm = document.getElementById("hiddenscore"); //this is the hidden form
 let storeScoreInput = document.getElementById("scoreinput");
+
 function gameEnd() {
   storeScoreInput.value = score; // Put the score in the hidden form for submitting
   storeScoreForm.submit();
 }
 
 const skipText = document.getElementById("skipbttn");
-skipText.addEventListener("click", function(e) {
+skipText.addEventListener("click", function (e) {
   if (!wordsArray[wordIndex + 1]) {
     wordReveal();
     setTimeout(getData(skip), 500);
@@ -229,6 +231,6 @@ function wordReveal() {
 // }
 
 const refreshDef = document.getElementById("refreshbttn");
-refreshDef.addEventListener("click", function(e) {
+refreshDef.addEventListener("click", function (e) {
   refresh();
 });

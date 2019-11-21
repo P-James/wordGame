@@ -3,7 +3,7 @@
 <div id="content"> 
     
     <div id="side">
-        Score: <span id="showScore"></span> 
+        Score: <span id="showScore">0</span> 
         <div id="timer"> </div>
     </div>
     

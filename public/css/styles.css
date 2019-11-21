@@ -115,6 +115,7 @@ input {
   margin-right: 50px;
   cursor: pointer;
 }
+
 #skipbttn:active {
   color: #ff1fcd;
 }
@@ -312,6 +313,7 @@ input {
 #refreshbttn {
   cursor: pointer;
 }
+
 #refreshbttn:active {
   color: #ff1fcd;
 }
