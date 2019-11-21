@@ -98,6 +98,7 @@ function skip() {
   }
 }
 // Check if score is correct, includes score increment
+const guessBar = document.querySelector("input[name='userAnswer']");
 let score = 0;
 function correctOrNot(e) {
   if (e.keyCode == 13) {
@@ -156,7 +157,6 @@ body.addEventListener("keyup", e => {
 const wrongSound = new Audio("public/sounds/wrong.mp3");
 const correctSound = new Audio("public/sounds/correct.mp3");
 
-const guessBar = document.querySelector("input[name='userAnswer']");
 guessBar.addEventListener("keyup", correctOrNot);
 
 // Clock.js starts here
@@ -198,11 +198,36 @@ function gameEnd() {
 const skipText = document.getElementById("skipbttn");
 skipText.addEventListener("click", function(e) {
   if (!wordsArray[wordIndex + 1]) {
-    getData(skip);
+    wordReveal();
+    setTimeout(getData(skip), 500);
   } else {
-    skip();
+    wordReveal();
+    setTimeout(skip(), 500);
   }
 });
+function wordReveal() {
+  let skippedWord = wordsArray[wordIndex]["word"];
+  guessBar.value = skippedWord;
+  for (let i = skippedWord.length - 1; i >= 0; i--) {
+    setTimeout(function() {
+      skippedWord = skippedWord.slice(0, i);
+      guessBar.value = skippedWord;
+    }, 50);
+  }
+}
+
+// let j = wordsArray[wordIndex]["word"].length;
+// let txt = wordsArray[wordIndex]["word"];
+// var speed = 50;
+// function wordReveal() {
+//   do {
+//     guessBar.value = txt;
+//     txt.slice(0, j - 1);
+//     j--;
+//     setTimeout(wordReveal, 50);
+//   } while (j == txt.length);
+// }
+
 const refreshDef = document.getElementById("refreshbttn");
 refreshDef.addEventListener("click", function(e) {
   refresh();
