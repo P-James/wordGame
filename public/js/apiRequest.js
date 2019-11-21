@@ -8,7 +8,7 @@ let wordsArray = [];
 // Min Frequency 5 (max is 8 so fairly common words).
 // Match regex pattern that limits to letters only.
 // Must have definitions and some synonyms.
-function getData() {
+function getData(callback) {
   let responseObj = {};
   fetch(
     "https://wordsapiv1.p.rapidapi.com/words/?letterPattern=%5E%5B%5E%5CW0-9%5Cs%5D%7B3%2C10%7D&frequencyMin=5&random=true",
@@ -51,22 +51,24 @@ function getData() {
     .catch(err => {
       console.log(err);
     });
-}
-// setTimeout necessary to allow http requests to complete before sending new request.
-function loadTwoWords() {
-  for (let i = 0; i < 2; i++) {
-    setTimeout(getData());
+  if (callback) {
+    callback();
   }
 }
-loadTwoWords();
+// setTimeout necessary to allow http requests to complete before sending new request.
+function loadWords(qty, callback) {
+  for (let i = 0; i < qty; i++) {
+    setTimeout(getData());
+  }
+  // if (callback) {
+  //   callback();
+  // }
+}
 
-console.log(wordsArray);
-
-//Render to DOM
-// Initial render to DOM - to be called once at start of game
-const definitionOutput = document.querySelector(".definition");
-const synonymsOutput = document.querySelector(".synonyms");
+loadWords(2);
 const synsQty = 3;
+let defIndex = 0;
+let wordIndex = 0;
 
 function render() {
   if (!wordsArray[0]) {
@@ -77,8 +79,43 @@ function render() {
     synonymsOutput.textContent = wordsArray[0]["synonyms"][0].slice(0, synsQty);
   }
 }
-let defIndex = 0;
-let wordIndex = 0;
+
+function skip() {
+  defIndex = 0; // refresh going back to first word definitions...
+  if (wordIndex < wordsArray.length - 1) {
+    definitionOutput.textContent =
+      wordsArray[wordIndex + 1]["definitions"][defIndex];
+    synonymsOutput.textContent = wordsArray[wordIndex + 1]["synonyms"][
+      defIndex
+    ].slice(0, synsQty);
+    wordIndex++;
+  } else {
+    wordIndex = 0;
+    skip();
+  }
+}
+// Check if score is correct, includes score increment
+let score = 0;
+function correctOrNot(e) {
+  if (e.keyCode == 13) {
+    if (guessBar.value == wordsArray[wordIndex]["word"]) {
+      correctSound.play();
+      score++;
+      let scoreDisplay = document.getElementById("showScore");
+      scoreDisplay.textContent = score;
+      skip();
+      loadWords(2);
+    } else {
+      wrongSound.play();
+      let input = document.getElementById("shake");
+      input.classList.add("wrong");
+      setTimeout(function() {
+        input.classList.remove("wrong");
+      }, 100);
+    }
+    guessBar.value = "";
+  }
+}
 
 function refresh() {
   defIndex++;
@@ -98,21 +135,13 @@ function refresh() {
   }
 }
 
-function skip() {
-  defIndex = 0; // refresh going back to first word definitions...
-  if (wordIndex < wordsArray.length - 1) {
-    definitionOutput.textContent =
-      wordsArray[wordIndex + 1]["definitions"][defIndex];
-    synonymsOutput.textContent = wordsArray[wordIndex + 1]["synonyms"][
-      defIndex
-    ].slice(0, synsQty);
-    wordIndex++;
-  } else {
-    wordIndex = 0;
-    skip();
-  }
-}
+console.log(wordsArray);
 
+//Render to DOM
+// Initial render to DOM - to be called once at start of game
+window.onload = render;
+const definitionOutput = document.querySelector(".definition");
+const synonymsOutput = document.querySelector(".synonyms");
 const body = document.querySelector("body");
 body.addEventListener("keyup", e => {
   if (e.keyCode == 49) {
@@ -124,32 +153,8 @@ body.addEventListener("keyup", e => {
 const wrongSound = new Audio("public/sounds/wrong.mp3");
 const correctSound = new Audio("public/sounds/correct.mp3");
 
-// Check if score is correct, includes score increment
-function correctOrNot(e) {
-  if (e.keyCode == 13) {
-    if (guessBar.value == wordsArray[wordIndex]["word"]) {
-      correctSound.play();
-      score++;
-      let scoreDisplay = document.getElementById("showScore");
-      scoreDisplay.textContent = score;
-      skip();
-      loadTwoWords();
-    } else {
-      wrongSound.play();
-      let input = document.getElementById("shake");
-      input.classList.add("wrong");
-      setTimeout(function() {
-        input.classList.remove("wrong");
-      }, 100);
-    }
-    guessBar.value = "";
-  }
-}
-
-let score = 0;
 const guessBar = document.querySelector("input[name='userAnswer']");
 guessBar.addEventListener("keyup", correctOrNot);
-window.onload = render;
 
 // Clock.js starts here
 const timeDisplay = document.getElementById("timer");
@@ -189,7 +194,11 @@ function gameEnd() {
 
 const skipText = document.getElementById("skipbttn");
 skipText.addEventListener("click", function(e) {
-  skip();
+  if (!wordsArray[wordIndex + 1]) {
+    getData(skip);
+  } else {
+    skip();
+  }
 });
 const refreshDef = document.getElementById("refreshbttn");
 refreshDef.addEventListener("click", function(e) {
