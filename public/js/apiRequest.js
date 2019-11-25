@@ -58,7 +58,7 @@ function loadTwoWords() {
     setTimeout(getData());
   }
 }
-loadTwoWords();
+
 
 console.log(wordsArray);
 
@@ -77,10 +77,9 @@ function render() {
     synonymsOutput.textContent = wordsArray[0]["synonyms"][0].slice(0, synsQty);
   }
 }
-let defIndex = 0;
-let wordIndex = 0;
 
-function refresh() {
+
+function refresh(defIndex) {
   defIndex++;
   if (!wordsArray[wordIndex]["synonyms"][defIndex]) {
     defIndex = 0;
@@ -96,9 +95,10 @@ function refresh() {
       defIndex
     ].slice(0, synsQty);
   }
+  return defIndex;
 }
 
-function skip() {
+function skip(wordIndex) {
   defIndex = 0; // refresh going back to first word definitions...
   if (wordIndex < wordsArray.length - 1) {
     definitionOutput.textContent =
@@ -109,31 +109,21 @@ function skip() {
     wordIndex++;
   } else {
     wordIndex = -1;
-    skip();
+    //skip(wordIndex);
   }
+  return wordIndex;
 }
 
-const body = document.querySelector("body");
-body.addEventListener("keyup", e => {
-  if (e.keyCode == 49) {
-    refresh();
-    e.preventDefault();
-  }
-});
-
-const wrongSound = new Audio("public/sounds/wrong.mp3");
-const correctSound = new Audio("public/sounds/correct.mp3");
-
 // Check if score is correct, includes score increment
-function correctOrNot(e) {
+function correctOrNot(e, score, wordIndex) {
+  console.log(wordIndex);
   if (e.keyCode == 13) {
-    if (guessBar.value == wordsArray[wordIndex]["word"]) {
+    if (e.target.value == wordsArray[wordIndex]["word"]) {
       correctSound.play();
-      score++;
       let scoreDisplay = document.getElementById("showScore");
-      scoreDisplay.textContent = score;
-      skip();
+      scoreDisplay.textContent = ++score;
       loadTwoWords();
+      wordIndex = skip(wordIndex);
     } else {
       wrongSound.play();
       let input = document.getElementById("shake");
@@ -142,52 +132,71 @@ function correctOrNot(e) {
         input.classList.remove("wrong");
       }, 100);
     }
-    guessBar.value = "";
+    e.target.value = "";
   }
+  return wordIndex;
 }
 
-let score = 0;
-const guessBar = document.querySelector("input[name='userAnswer']");
-guessBar.addEventListener("keyup", correctOrNot);
-window.onload = render;
-
-// Clock.js starts here
-const timeDisplay = document.getElementById("timer");
-let i = 60;
-timeDisplay.textContent = i;
-let keyPressStarted = false;
-guessBar.addEventListener("keyup", function() {
-  if (keyPressStarted === false) {
-    timerStart();
-  }
-});
-
-function timerStart() {
+function timerStart(time, timeDisplay) {
+  timeDisplay.textContent = time;
   setInterval(function() {
-    flashStyle();
-    if (i >= 0) {
-      timeDisplay.textContent = i;
-      i--;
-    } else if (i === -1) {
+    flashStyle(time,timeDisplay);
+    if (time >= 0) {
+      timeDisplay.textContent = time;
+      time--;
+    } else if (time === -1) {
       gameEnd();
     }
   }, 1000);
-  keyPressStarted = true;
+  return true;
 }
 
-function flashStyle() {
-  if (i <= 15) {
+function flashStyle(remainingTime, timeDisplay) {
+  if (remainingTime <= 15) {
     timeDisplay.classList.add("bigFlash");
   }
 }
-const storeScoreForm = document.getElementById("hiddenscore"); //this is the hidden form
-let storeScoreInput = document.getElementById("scoreinput");
+
 function gameEnd() {
-  storeScoreInput.value = score; // Put the score in the hidden form for submitting
-  storeScoreForm.submit();
+  let scoreDisplay = document.getElementById("showScore");
+  document.getElementById("scoreinput").value =  scoreDisplay.textContent; // Put the score in the hidden form for submitting
+  document.getElementById("hiddenscore").submit();
 }
 
-const skipText = document.getElementById("skipbttn");
-skipText.addEventListener("click", function(e) {
-  skip();
-});
+function init() {
+  // starting game variables
+  const timeDisplay = document.getElementById("timer");
+  const time= 60;
+  timeDisplay.textContent = time;
+  let keyPressStarted = false;
+  let scoreDisplay = document.getElementById("showScore");
+  scoreDisplay.textContent = 0;
+  var wordIndex = 0; // skip default value
+  loadTwoWords();
+
+  document.querySelector("input[name='userAnswer']").addEventListener("keyup", function(e) {
+    if (keyPressStarted === false) {
+      keyPressStarted = timerStart(time, timeDisplay);
+    }
+    wordIndex = correctOrNot(e, scoreDisplay.textContent, wordIndex);
+  });
+
+  window.onload = render;
+  // skip the word
+  const skipText = document.getElementById("skipbttn");
+  skipText.addEventListener("click", function(e) {
+    wordIndex = skip(wordIndex);
+  });
+  const refreshDef = document.getElementById("refreshbttn");
+  let defIndex=0;
+  refreshDef.addEventListener("click", function(e) {
+    defIndex=refresh(defIndex);
+  });
+}
+// load of the audio for more efficiency
+const wrongSound = new Audio("public/sounds/wrong.mp3");
+const correctSound = new Audio("public/sounds/correct.mp3");
+{
+  init();
+}
+
