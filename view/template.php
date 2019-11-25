@@ -14,16 +14,11 @@
 <body>
     <div id="center">
         <fieldset form="insertion">
-    
             <legend>
                 <img id="logo" src=".\public\images\wordgame_logo.png">
             </legend>
-    
             <?= $content; ?>
-        
         </fieldset>
     </div>
-
 </body>
-
 </html>

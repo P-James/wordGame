@@ -1,26 +1,27 @@
 <?php
 require("./controller/controller.php");
-
-if (isset($_GET['action'])) {
-    if($_GET['action'] == "home"){
-        loadStartPage();
-    } 
-    if($_GET['action'] == "playGame"){
-        playGame();
+try{
+    if (isset($_REQUEST['action'])) {
+        if($_REQUEST['action'] == "home"){
+            loadStartPage();
+        } 
+        if($_REQUEST['action'] == "playGame"){
+            playGame();
+        }
+        if($_REQUEST['action'] == "showScore"){
+            showScore();
+        }
+        if($_REQUEST['action'] == "enterHighscore"){
+            enterHighscore();
+        }
+        if($_REQUEST['action'] == "highScorePg"){
+            highScorePg($_REQUEST);
+        }  
+    } else {
+       loadStartPage();
     }
-    if($_GET['action'] == "showScore"){
-        showScore();
-    }
-    if($_GET['action'] == "enterHighscore"){
-        enterHighscore();
-    }
-    if($_GET['action'] == "highScorePg"){
-        highScorePg($_POST);
-    }
-
-    
-    
-} else {
-   loadStartPage();
+} catch(Exception $e){
+   echo 'Error : '. $e->getMessage();
 }
+
 

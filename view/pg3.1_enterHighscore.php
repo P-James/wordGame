@@ -5,7 +5,7 @@ ob_start(); ?>
     <div id="highScorePg1">
         <div class="score">
             <p>your score was</p>
-            <h1 id="userScore"><?= $_POST['score'] ?></h1>
+            <h1 id="userScore"><?= $_REQUEST['score'] ?></h1>
             <a href="index.php?action=playGame">Play again?</a>
         </div>
         <div class="inputsBottom">
@@ -13,9 +13,11 @@ ob_start(); ?>
                 <p>save your score?</p>
                 <p>enter your username below</p>
                 <span> <?php if (isset($alreadyUsed)) {echo $alreadyUsed;}?></p>
-                <form id="usernameInput" action="index.php?action=highScorePg" method="POST">
-                <input type="text" name="userNameInput">
-                <input type="hidden" name="score" value="<?= $_POST['score']?>"></form>
+                <form id="usernameInput" action="index.php" method="POST">
+                    <input type="text" name="userNameInput"/>
+                    <input type="hidden" name="score" value="<?= $_POST['score']?>"/>
+                    <input type="hidden" name="action" value="highScorePg"/>
+                </form>
             </div>
             <div class="toHighscorePg">
             <a href="index.php?action=highScorePg">go to HIGH SCORES</a>
