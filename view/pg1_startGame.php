@@ -10,7 +10,8 @@
         <p>house, household, menage</p>
     </div>
     <div class="inputDiv">
-        <form method="POST" action="index.php?action=playGame">
+        <form method="POST" action="index.php">
+            <input type="hidden" name="action" value="playGame"/>
             <input type="submit" id="startGameButton" value="start game">
         </form>
     </div>
