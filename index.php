@@ -20,20 +20,8 @@ try{
     } else {
        loadStartPage();
     }
-<<<<<<< HEAD
-    if($_GET['action'] == "highScorePg"){
-        highScorePg($_POST);
-        
-    }
-
-    
-    
-} else {
-   loadStartPage();
-=======
 } catch(Exception $e){
    echo 'Error : '. $e->getMessage();
->>>>>>> b51a188abbf5709ec722b2be8bbea61fb034e34a
 }
 
 
