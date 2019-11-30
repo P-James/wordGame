@@ -11,14 +11,15 @@ let wordsArray = [];
 function getData(callback) {
   let responseObj = {};
   fetch(
-      "https://wordsapiv1.p.rapidapi.com/words/?letterPattern=%5E%5B%5E%5CW0-9%5Cs%5D%7B3%2C10%7D&frequencyMin=5&random=true", {
-        method: "GET",
-        headers: {
-          "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
-          "x-rapidapi-key": "30f5aff5d9msha651378ce5a3dcap1cfe17jsn3eaca2fbd7b5"
-        }
+    "https://wordsapiv1.p.rapidapi.com/words/?letterPattern=%5E%5B%5E%5CW0-9%5Cs%5D%7B3%2C10%7D&frequencyMin=5&random=true",
+    {
+      method: "GET",
+      headers: {
+        "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
+        "x-rapidapi-key": "30f5aff5d9msha651378ce5a3dcap1cfe17jsn3eaca2fbd7b5"
       }
-    )
+    }
+  )
     .then(response => {
       return response.json();
     })
@@ -100,7 +101,6 @@ function skip() {
 const guessBar = document.querySelector("input[name='userAnswer']");
 let score = 0;
 
-
 function correctOrNot(e) {
   if (e.keyCode == 13) {
     if (guessBar.value == wordsArray[wordIndex]["word"]) {
@@ -114,7 +114,7 @@ function correctOrNot(e) {
       wrongSound.play();
       let input = document.getElementById("shake");
       input.classList.add("wrong");
-      setTimeout(function () {
+      setTimeout(function() {
         input.classList.remove("wrong");
       }, 100);
     }
@@ -165,14 +165,14 @@ const timeDisplay = document.getElementById("timer");
 let i = 60;
 timeDisplay.textContent = i;
 let keyPressStarted = false;
-guessBar.addEventListener("keyup", function () {
+guessBar.addEventListener("keyup", function() {
   if (keyPressStarted === false) {
     timerStart();
   }
 });
 
 function timerStart() {
-  setInterval(function () {
+  setInterval(function() {
     flashStyle();
     if (i >= 0) {
       timeDisplay.textContent = i;
@@ -198,39 +198,33 @@ function gameEnd() {
 }
 
 const skipText = document.getElementById("skipbttn");
-skipText.addEventListener("click", function (e) {
+skipText.addEventListener("click", function(e) {
   if (!wordsArray[wordIndex + 1]) {
-    wordReveal();
-    setTimeout(getData(skip), 500);
+    // revealWord().then(function() {
+    getData(skip);
+    // });
   } else {
-    wordReveal();
-    setTimeout(skip(), 500);
+    setTimeout(skip());
   }
 });
-function wordReveal() {
-  let skippedWord = wordsArray[wordIndex]["word"];
-  guessBar.value = skippedWord;
-  for (let i = skippedWord.length - 1; i >= 0; i--) {
-    setTimeout(function() {
-      skippedWord = skippedWord.slice(0, i);
-      guessBar.value = skippedWord;
-    }, 50);
-  }
+
+function revealWord() {
+  return new Promise((resolve, reject) => {
+    guessBar.value = wordsArray[wordIndex]["word"];
+    let i = guessBar.value.length;
+    if (i >= 0) {
+      setTimeout(function() {
+        guessBar.value = guessBar.value.slice(0, i);
+        i--;
+      }, 60);
+    }
+    if (i == -1) {
+      return resolve();
+    }
+  });
 }
 
-// let j = wordsArray[wordIndex]["word"].length;
-// let txt = wordsArray[wordIndex]["word"];
-// var speed = 50;
-// function wordReveal() {
-//   do {
-//     guessBar.value = txt;
-//     txt.slice(0, j - 1);
-//     j--;
-//     setTimeout(wordReveal, 50);
-//   } while (j == txt.length);
-// }
-
 const refreshDef = document.getElementById("refreshbttn");
-refreshDef.addEventListener("click", function (e) {
+refreshDef.addEventListener("click", function(e) {
   refresh();
 });
